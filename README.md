@@ -15,47 +15,47 @@ Ensure these are installed on your machine before proceeding.
 1. **Clone the Repository**: Clone this repository to your local machine.
 2. **Environment Setup**: Navigate to the project directory and run the following commands to set up the environment:
 
-'''
+```
 make pip-install # Install Python dependencies
 make aws-configure # Configure AWS CLI (local version)
-'''
+```
 
 3. **Start Services**:
 
-'''
+```
 make start  # Starts the Docker containers
-'''
+```
 
 4. **Perform ETL Process**: Run the ETL process to read from the SQS queue, mask PII, and write to the Postgres database:
 
-'''
+```
 make perform-etl
-'''
+```
 
 5. **Stop the Application**: To stop and remove the Docker containers:
 
-'''
+```
 make stop
-'''
+```
 
 6. **Clean up Docker**: To clean up unused Docker data:
 
-'''
+```
 make clean
-'''
+```
 
 ## Testing
 
 ** Reading Message from Queue: 
 
-'''
+```
 awslocal sqs receive-message --queue-url http://localhost:4566/000000000000/login-queue
-'''
+```
 
 ** Verify Database Records:
 
-'''
+```
 psql -d postgres -U postgres -p 5432 -h localhost -W
 SELECT * FROM user_logins;
-'''
+```
 
