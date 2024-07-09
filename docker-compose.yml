@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  localstack:
+    image: fetchdocker/data-takehome-localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - DEBUG=${DEBUG-}
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
+      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - ${PWD}/data/sample_data.json.gz:/tmp/sample_data.json.gz
+      - ${PWD}/scripts:/docker-entrypoint-initaws.d
+    command: >
+      sh -c "
+        /docker-entrypoint-initaws.d/01_call_python_scripts.sh/01_call_python_scripts &&
+        /usr/local/bin/docker-entrypoint.sh"
+  postgres:
+    image: fetchdocker/data-takehome-postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
