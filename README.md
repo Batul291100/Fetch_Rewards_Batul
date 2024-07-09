@@ -46,13 +46,13 @@ make clean
 
 ## Testing
 
-**Reading Message from Queue: 
+**Reading Message from Queue**: 
 
 ```
 awslocal sqs receive-message --queue-url http://localhost:4566/000000000000/login-queue
 ```
 
-**Verify Database Records:
+**Verify Database Records**:
 
 ```
 psql -d postgres -U postgres -p 5432 -h localhost -W
